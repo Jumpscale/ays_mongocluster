@@ -16,7 +16,7 @@ class Actions(ActionsBaseMgmt):
                 if role not in nodeconfig:
                     continue
                 roleconfig = {'executor': executor}
-                roleconfig['addr'] = executor.addr
+                roleconfig['addr'] = node.instance
                 roleconfig['private_port'] = int(port)
                 roleconfig['public_port'] = int(port)
                 # TODO (*2*) path to db should be mounted

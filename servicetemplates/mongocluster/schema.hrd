@@ -1,4 +1,4 @@
 
-nodes = type:list descr:'mongo cluster nodes' consume:os:1
+nodes = type:str list descr:'mongo cluster nodes' consume:os:1
 clusterconfig = type:dict dict
  

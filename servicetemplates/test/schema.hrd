@@ -1,0 +1,2 @@
+
+mongocluster = type:str descr:'mongo cluster' parent:mongocluster

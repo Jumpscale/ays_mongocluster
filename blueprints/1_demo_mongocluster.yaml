@@ -3,20 +3,22 @@ sshkey__demo:
 
 ######### env 1 ###########
 g8client__env1:
-    g8.url: 'du-conv-3.demo.greenitglobe.com'
-    g8.login: 'rthursday'
+    g8.url: 'gig.demo.greenitglobe.com'
+    g8.login: 'deboeckj'
     g8.password: '*********'
-    g8.account: 'rthursday'
+    g8.account: 'JoAccount'
 
 vdcfarm__vdcfarm1:
 
 vdc__vdc1:
     vdcfarm: 'vdcfarm1'
     g8.client.name: 'env1'
+    g8.location: 'be-conv-2'
 
 node.ovc__vm1:
-    os.image: 'ubuntu 16.04 x64'
+    os.image: 'ubuntu 14.04 x64'
     vdc: 'vdc1'
+    weave: true
 
 os.ssh.ubuntu__vm1:
     node: 'vm1'
@@ -25,44 +27,73 @@ os.ssh.ubuntu__vm1:
 
 ######## env 2 ###########
 g8client__env2:
-    g8.url: 'du-conv-3.demo.greenitglobe.com'
-    g8.login: 'rthursday'
-    g8.password: 'w1nt3r1sc0m1ng'
-    g8.account: 'rthursday'
+    g8.url: 'gig.demo.greenitglobe.com'
+    g8.login: 'deboeckj'
+    g8.password: '*********'
+    g8.account: 'JoAccount'
 
 vdcfarm__vdcfarm2:
 
 vdc__vdc2:
     vdcfarm: 'vdcfarm2'
     g8.client.name: 'env2'
+    g8.location: 'be-conv-2'
 
 node.ovc__vm2:
-    os.image: 'ubuntu 16.04 x64'
+    os.image: 'ubuntu 14.04 x64'
     vdc: 'vdc2'
+    weave: true
 
 os.ssh.ubuntu__vm2:
     node: 'vm2'
     weave: true
 
 # ######### env 3 ###########
-# g8client__env3:
-#     g8.url: 'du-conv-3.demo.greenitglobe.com'
-#     g8.login: 'rthursday'
-#     g8.password: 'w1nt3r1sc0m1ng'
-#     g8.account: 'rthursday'
+g8client__env3:
+    g8.url: 'gig.demo.greenitglobe.com'
+    g8.login: 'deboeckj'
+    g8.password: '********'
+    g8.account: 'JoAccount'
 
-# vdcfarm__vdcfarm3:
+vdcfarm__vdcfarm3:
 
-# vdc__vdc3:
-#     vdcfarm: 'vdcfarm3'
-#     g8.client.name: 'env3'
+vdc__vdc3:
+    vdcfarm: 'vdcfarm3'
+    g8.client.name: 'env3'
+    g8.location: 'be-conv-2'
 
-# node.ovc__vm3:
-#     os.image: 'ubuntu 16.04 x64'
-#     vdc: 'vdc3'
+node.ovc__vm3:
+    os.image: 'ubuntu 14.04 x64'
+    vdc: 'vdc3'
+    weave: true
 
-# os.ssh.ubuntu__vm3:
-#     node: 'vm3'
+os.ssh.ubuntu__vm3:
+    node: 'vm3'
+    weave: true
+
+
+# ######### env 4 ###########
+g8client__env4:
+    g8.url: 'gig.demo.greenitglobe.com'
+    g8.login: 'deboeckj'
+    g8.password: '*******'
+    g8.account: 'JoAccount'
+
+vdcfarm__vdcfarm4:
+
+vdc__vdc4:
+    vdcfarm: 'vdcfarm4'
+    g8.client.name: 'env4'
+    g8.location: 'be-conv-2'
+
+node.ovc__vm4:
+    os.image: 'ubuntu 14.04 x64'
+    vdc: 'vdc4'
+    weave: true
+
+os.ssh.ubuntu__vm4:
+    node: 'vm4'
+    weave: true
 
 
 ########## dockers ##########
@@ -109,34 +140,61 @@ os.ssh.ubuntu__docker2:
 
 # -------- docker 3 -------------
 
+app_docker__docker3:
+    os: vm3
 
-# app_docker__docker3:
-#     os: vm3
+node.docker__docker3:
+  image: 'jumpscale/ubuntu1604'
+  os: 'vm3'
+  docker: docker3
+  ports: 
+    - '27017:27017'
+    - '27019:27019'
 
-# node.docker__docker3:
-#   image: 'jumpscale/ubuntu1604'
-#   os: 'vm3'
-#   docker: docker3
-#   ports: 
-#     - '27018:27018'
-#     - '27019:27019'
-#   sshkey: 'demo'
+os.ssh.ubuntu__docker3:
+  aysfs: false
+  agent: false
+  weave: false
+  node: docker3
+  ssh.key: demo
 
-# os.ssh.ubuntu__docker3:
-#   aysfs: false
-#   agent: false
-#   weave: false
-#   node: docker3
-#   ssh.key: demo
+
+# -------- docker 4 -------------
+
+app_docker__docker4:
+    os: vm4
+
+node.docker__docker4:
+  image: 'jumpscale/ubuntu1604'
+  os: 'vm4'
+  docker: docker4
+  ports: 
+    - '27017:27017'
+    - '27019:27019'
+
+os.ssh.ubuntu__docker4:
+  aysfs: false
+  agent: false
+  weave: false
+  node: docker4
+  ssh.key: demo
+
 
 
 ####### mongocluster #######
-# mongocluster__demo:
-#     nodes:
-#         - docker1
-#         - docker2
-#         - docker3
-#     clusterconfig:
-#         docker1: 'shard:27017 mongos:27019'
-#         docker2: 'shard:27017 mongos:27019 config:27018'
-#         docker3: 'config:27018 mongos:27019'
+mongocluster__demo:
+    nodes:
+        - docker1
+        - docker2
+        - docker3
+        - docker4
+    clusterconfig:
+        docker1: 'shard:27017 mongos:27019'
+        docker2: 'shard:27017 mongos:27019 config:27018'
+        docker3: 'config:27018 mongos:27019'
+        docker3: 'shard:27017 config:27018'
+
+
+####### test ############
+test__main:
+    mongocluster: demo
